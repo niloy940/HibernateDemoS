@@ -12,6 +12,7 @@
         <!-- DB schema will be updated if needed -->
          <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="com.niloy.aj.hibernate.Student"/>
+        <mapping class="com.niloy.aj.hibernate.model.Student"/>
+        <mapping class="com.niloy.aj.hibernate.model.Course"/>
     </session-factory>
 </hibernate-configuration>
