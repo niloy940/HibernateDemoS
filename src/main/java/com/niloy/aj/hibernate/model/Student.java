@@ -1,5 +1,6 @@
 package com.niloy.aj.hibernate.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -11,6 +12,8 @@ public class Student {
     @Id
     private int id;
     private String name;
+    @Embedded
+    private Address address;
     @ManyToMany(mappedBy = "studentList")
     private List<Course> registeredCourses;
 
@@ -44,6 +47,14 @@ public class Student {
         return registeredCourses;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public void addCourse(Course course){
         registeredCourses.add(course);
     }
@@ -53,7 +64,7 @@ public class Student {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", registeredCourses=" + registeredCourses +
+//                ", registeredCourses=" + registeredCourses +
                 '}';
     }
 }

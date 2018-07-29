@@ -1,5 +1,7 @@
 package com.niloy.aj.hibernate;
 
+import com.niloy.aj.hibernate.model.Address;
+import com.niloy.aj.hibernate.model.Course;
 import com.niloy.aj.hibernate.model.Student;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -13,19 +15,17 @@ import java.util.List;
 
 public class Main {
     public Main(){
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        SessionFactory sessionFactory = HibernateSingleton.getSessionFactory();
 
-
-        List<Student> studentList;
 
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
 
-            /*Student student1 = new Student(5, "EEE");
-            Student student2 = new Student(6, "FFF");
-            Student student3 = new Student(7, "GGG");
+            /*Student student1 = new Student(8, "Ram");
+            Student student2 = new Student(9, "Rahim");
+            Student student3 = new Student(10, "John");
 
             Course course1 = new Course("CSE4048", "Advanced Java", 3.0);
             Course course2 = new Course("CSE4041", "Artificial Intelligence", 3.0);
@@ -42,6 +42,10 @@ public class Main {
             course2.addStudent(student1);
             course2.addStudent(student3);
 
+            student1.setAddress(new Address("Banani", "Dhaka", "Bangladesh", "1211"));
+            student2.setAddress(new Address("Kafrul", "Dhaka", "Bangladesh", "1205"));
+            student3.setAddress(new Address("Mirpur", "Dhaka", "Bangladesh", "1206"));
+
             session.save(student1);
             session.save(student2);
             session.save(student3);
@@ -51,28 +55,32 @@ public class Main {
 
 
             //Get Criteria Builder
-            /*CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
 
             CriteriaQuery<Student> criteriaQuery = builder.createQuery(Student.class);
             criteriaQuery.from(Student.class);
 
-            studentList = session.createQuery(criteriaQuery).list();
+            List<Student> studentList = session.createQuery(criteriaQuery).list();
 
-            studentList.forEach(System.out::println);*/
+            studentList.forEach(System.out::println);
+//            studentList.forEach(obj -> System.out.println(obj.getId()+ "." +obj.getName()));
 
-
-             Student student;
-
-            student = session.get(Student.class, 6);
+//            Student student = session.get(Student.class, 1);
 //            student.setName("Jason");
 
-            System.out.println(student);
+            Student student = studentList.get(8);
+
+            System.out.println(student.getId());
+
+            System.out.println(student.getAddress());
+
 
             transaction.commit();
+            System.out.println("Committed successfully");
 
         } catch (HibernateException he){
             transaction.rollback();
-            he.printStackTrace();
+            System.err.println(he);
         }
 
         session.close();
